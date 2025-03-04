@@ -6,22 +6,7 @@ public static class Arrays
     /// integer greater than 0.
     /// </summary>
     /// <returns>array of doubles that are the multiples of the supplied number</returns>
-    /// 
-    public static void Run(){
-        var result1 = MultiplesOf(7, 5);
-        Console.WriteLine("<double[]>{" + string.Join(", ", result1) + "}"); // <double[]>{7, 14, 21, 28, 35}
-
-        var result2 = MultiplesOf(3, 5);
-        Console.WriteLine("<double[]>{" + string.Join(", ", result2) + "}"); // <double[]>{3, 6, 9, 12, 15}
-
-        var data1 = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-        RotateListRight(data1, 5);
-        Console.WriteLine("<List>{" + string.Join(", ", data1) + "}"); // <List>{5, 6, 7, 8, 9, 1, 2, 3, 4} 
-
-        var data2 = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-        RotateListRight(data2, 3);
-        Console.WriteLine("<List>{" + string.Join(", ", data2) + "}"); // <List>{7, 8, 9, 1, 2, 3, 4, 5, 6}
-    }   
+    ///  
 
     public static double[] MultiplesOf(double number, int length)
     {
