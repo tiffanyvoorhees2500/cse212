@@ -15,3 +15,5 @@
         }
     }
 }
+
+// SortingArry = O(n * (n * 1)) => O(n * (n)) => O(n^2)
