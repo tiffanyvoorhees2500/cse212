@@ -24,7 +24,7 @@ public class Translator
     /// <returns>fixed array of divisors</returns>
     public void AddWord(string fromWord, string toWord)
     {
-        // ADD YOUR CODE HERE
+        _words.TryAdd(fromWord, toWord);
     }
 
     /// <summary>
@@ -35,6 +35,6 @@ public class Translator
     public string Translate(string fromWord)
     {
         // ADD YOUR CODE HERE
-        return "";
+        return _words.TryGetValue(fromWord, out var toWord) ? toWord : "???";
     }
 }
