@@ -32,7 +32,15 @@ public class Maze
     /// </summary>
     public void MoveLeft()
     {
-        // FILL IN CODE
+        _mazeMap.TryGetValue((_currX, _currY), out var direction);
+        if (!direction[0])
+        {
+            throw new InvalidOperationException("Can't go that way!");
+        }
+        else
+        {
+            _currX--;
+        }
     }
 
     /// <summary>
@@ -41,7 +49,15 @@ public class Maze
     /// </summary>
     public void MoveRight()
     {
-        // FILL IN CODE
+        _mazeMap.TryGetValue((_currX, _currY), out var direction);
+        if (!direction[1])
+        {
+            throw new InvalidOperationException("Can't go that way!");
+        }
+        else
+        {
+            _currX++;
+        }
     }
 
     /// <summary>
@@ -50,7 +66,15 @@ public class Maze
     /// </summary>
     public void MoveUp()
     {
-        // FILL IN CODE
+        _mazeMap.TryGetValue((_currX, _currY), out var direction);
+        if (!direction[2])
+        {
+            throw new InvalidOperationException("Can't go that way!");
+        }
+        else
+        {
+            _currY--;
+        }
     }
 
     /// <summary>
@@ -59,7 +83,15 @@ public class Maze
     /// </summary>
     public void MoveDown()
     {
-        // FILL IN CODE
+        _mazeMap.TryGetValue((_currX, _currY), out var direction);
+        if (!direction[3])
+        {
+            throw new InvalidOperationException("Can't go that way!");
+        }
+        else
+        {
+            _currY++;
+        }
     }
 
     public string GetStatus()
