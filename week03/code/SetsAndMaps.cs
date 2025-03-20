@@ -65,9 +65,12 @@ public static class SetsAndMaps
         {
             var fields = line.Split(",");
             var degree = fields[3];
-            if (degrees.ContainsKey(degree)){
+            if (degrees.ContainsKey(degree))
+            {
                 degrees[degree]++;
-            } else {
+            }
+            else
+            {
                 degrees[degree] = 1;
             }
         }
@@ -93,8 +96,110 @@ public static class SetsAndMaps
     /// </summary>
     public static bool IsAnagram(string word1, string word2)
     {
-        // TODO Problem 3 - ADD YOUR CODE HERE
-        return false;
+        // Make words lowercase and remove spaces
+        var cleanWord1 = word1.ToLower().Replace(" ", "");
+        var cleanWord2 = word2.ToLower().Replace(" ", "");
+        if (cleanWord1.Length != cleanWord2.Length)
+        {
+            return false;
+        }
+
+        // ATTEMPT #3... Using an int[] instead of a dictionary, because research shows it is more efficient, but the instructions say we need to use a dictionary...???
+        // Efficiency is 0(n)
+
+        int[] charCount = new int[256]; // Assuming ASCII characters
+
+        for (int i = 0; i < cleanWord1.Length; i++)
+        {
+            charCount[cleanWord1[i]]++; // Increment for Word 1
+            charCount[cleanWord2[i]]--; // Decrement for Word 2
+        }
+        // Check if all counts are zero
+        foreach (var count in charCount)
+        {
+            if (count != 0)
+            {
+                return false;
+            }
+        }
+
+        return true;
+
+
+
+        // ATTEMPT #2... Using 1 loop to compare letters in both words
+        // Efficiency is O(n), but only has 1 loop, maybe that makes a difference. (using for instead of foreach to have access to index)
+        // var charCount = new Dictionary<char, int>();
+
+        // for (var i = 0; i < cleanWord1.Length; i++)
+        // {
+        //     if (charCount.ContainsKey(cleanWord1[i]))
+        //     {
+        //         charCount[cleanWord1[i]]++;
+        //     }
+        //     else
+        //     {
+        //         charCount[cleanWord1[i]] = 1;
+
+        //     }
+        //     if (charCount.ContainsKey(cleanWord2[i]))
+        //     {
+        //         charCount[cleanWord2[i]]--;
+        //     }
+        //     else
+        //     {
+        //         charCount[cleanWord2[i]] = -1;
+        //     }
+        // }
+
+        // foreach (var count in charCount.Values)
+        // {
+        //     if (count != 0)
+        //     {
+        //         return false;
+        //     }
+        // }
+
+        // return true;
+
+        // ATTEMPT #1... Using 2 loops to first put letters in a dictionary then compare 
+        // Efficiency is O(2n) => O(n)
+
+        // foreach (var letter in cleanWord1)
+        // {
+        //     if (charCount.ContainsKey(letter))
+        //     {
+        //         charCount[letter]++;
+        //     }
+        //     else
+        //     {
+        //         charCount[letter] = 1;
+        //     }
+        // }
+
+        // foreach (var letter in cleanWord2)
+        // {
+        //     if (charCount.ContainsKey(letter))
+        //     {
+        //         charCount[letter]--; // Found match, reduce count of letter in dictionary
+        //         if (charCount[letter] == 0)
+        //         {
+        //             charCount.Remove(letter); // We have reached the max number of occurrences allowed for this letter
+        //         }
+        //     }
+        //     else
+        //     {
+        //         return false; // Found a letter in word2 that is not in word1
+        //     }
+        // }
+
+        // If there are still items in the dictionary, then the words are not anagrams
+        // if (charCount.Count != 0)
+        // {
+        //     return false;
+        // }
+
+        // return true;
     }
 
     /// <summary>
