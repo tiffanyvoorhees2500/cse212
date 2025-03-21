@@ -105,18 +105,34 @@ public static class SetsAndMaps
             return false;
         }
 
-        // ATTEMPT #3... Using an int[] instead of a dictionary, because research shows it is more efficient, but the instructions say we need to use a dictionary...???
-        // Efficiency is 0(n)
+        // ATTEMPT #2... Using 1 loop to compare letters in both words
+        // Efficiency is O(n), but only has 1 loop, maybe that makes a difference. (using for instead of foreach to have access to index)
 
-        int[] charCount = new int[256]; // Assuming ASCII characters
+        // Does not pass the efficiency test, but Brother Kunz said as long as it is O(n) it should be fine
+        var charCount = new Dictionary<char, int>();
 
-        for (int i = 0; i < cleanWord1.Length; i++)
+        for (var i = 0; i < cleanWord1.Length; i++)
         {
-            charCount[cleanWord1[i]]++; // Increment for Word 1
-            charCount[cleanWord2[i]]--; // Decrement for Word 2
+            if (charCount.ContainsKey(cleanWord1[i]))
+            {
+                charCount[cleanWord1[i]]++;
+            }
+            else
+            {
+                charCount[cleanWord1[i]] = 1;
+
+            }
+            if (charCount.ContainsKey(cleanWord2[i]))
+            {
+                charCount[cleanWord2[i]]--;
+            }
+            else
+            {
+                charCount[cleanWord2[i]] = -1;
+            }
         }
-        // Check if all counts are zero
-        foreach (var count in charCount)
+
+        foreach (var count in charCount.Values)
         {
             if (count != 0)
             {
@@ -126,34 +142,21 @@ public static class SetsAndMaps
 
         return true;
 
+        // Leaving the other attempts so that I can reference them later if needed...
+        // ATTEMPT #3... Using an int[] instead of a dictionary, because research shows it is more efficient, BUT
+        //  the instructions say we need to use a dictionary...???
 
+        // Efficiency is 0(n)... This one passes the efficiency test, but not the instructions
 
-        // ATTEMPT #2... Using 1 loop to compare letters in both words
-        // Efficiency is O(n), but only has 1 loop, maybe that makes a difference. (using for instead of foreach to have access to index)
-        // var charCount = new Dictionary<char, int>();
+        // int[] charCount = new int[256]; // Assuming ASCII characters
 
-        // for (var i = 0; i < cleanWord1.Length; i++)
+        // for (int i = 0; i < cleanWord1.Length; i++)
         // {
-        //     if (charCount.ContainsKey(cleanWord1[i]))
-        //     {
-        //         charCount[cleanWord1[i]]++;
-        //     }
-        //     else
-        //     {
-        //         charCount[cleanWord1[i]] = 1;
-
-        //     }
-        //     if (charCount.ContainsKey(cleanWord2[i]))
-        //     {
-        //         charCount[cleanWord2[i]]--;
-        //     }
-        //     else
-        //     {
-        //         charCount[cleanWord2[i]] = -1;
-        //     }
+        //     charCount[cleanWord1[i]]++; // Increment for Word 1
+        //     charCount[cleanWord2[i]]--; // Decrement for Word 2
         // }
-
-        // foreach (var count in charCount.Values)
+        // // Check if all counts are zero
+        // foreach (var count in charCount)
         // {
         //     if (count != 0)
         //     {
@@ -225,10 +228,11 @@ public static class SetsAndMaps
         using var jsonStream = client.Send(getRequestMessage).Content.ReadAsStream();
         using var reader = new StreamReader(jsonStream);
         var json = reader.ReadToEnd();
-        var options = new JsonSerializerOptions{PropertyNameCaseInsensitive = true};
+        var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
 
         var featureCollection = JsonSerializer.Deserialize<FeatureCollection>(json, options);
 
+        // Loop through each feature and return the place and magnitude in string format
         return featureCollection.Features.Select(feature => $"{feature.Properties.Place} - Mag {feature.Properties.Mag}").ToArray();
 
     }
