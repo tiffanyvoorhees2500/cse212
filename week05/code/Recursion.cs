@@ -15,7 +15,7 @@ public static class Recursion
     public static int SumSquaresRecursive(int n)
     {
         // TODO Start Problem 1
-        if(n <=0)
+        if (n <= 0)
         {
             return 0;
         }
@@ -111,7 +111,8 @@ public static class Recursion
     /// </summary>
     public static decimal CountWaysToClimb(int s, Dictionary<int, decimal>? remember = null)
     {
-        if (remember == null) {
+        if (remember == null)
+        {
             remember = new Dictionary<int, decimal>();
         }
 
@@ -126,13 +127,16 @@ public static class Recursion
         if (s == 3)
             return 4;
 
-        if(remember.ContainsKey(s))
+        if (remember.ContainsKey(s))
         {
             return remember[s];
         }
 
         // Solve using recursion
-        decimal ways = CountWaysToClimb(s - 1) + CountWaysToClimb(s - 2) + CountWaysToClimb(s - 3);
+        decimal ways = CountWaysToClimb(s - 1, remember)
+            + CountWaysToClimb(s - 2, remember)
+            + CountWaysToClimb(s - 3, remember);
+
         remember[s] = ways;
         return ways;
     }
@@ -152,7 +156,7 @@ public static class Recursion
     /// </summary>
     public static void WildcardBinary(string pattern, List<string> results)
     {
-        if(pattern.IndexOf("*") == -1)
+        if (pattern.IndexOf("*") == -1)
         {
             results.Add(pattern);
             return;
@@ -179,28 +183,31 @@ public static class Recursion
     {
         // If this is the first time running the function, then we need
         // to initialize the currPath list.
-        if (currPath == null) {
+        if (currPath == null)
+        {
             currPath = new List<ValueTuple<int, int>>();
         }
 
-        if (!maze.IsValidMove(currPath, x, y)) {
+        if (!maze.IsValidMove(currPath, x, y))
+        {
             // If we are not at a valid position, then return
             return;
         }
 
-        if (maze.IsEnd(x, y)) {
+        if (maze.IsEnd(x, y))
+        {
             // If we are at the end of the maze, then add the current path to the results
-            currPath.Add((x,y));
+            currPath.Add((x, y));
             string pathString = currPath.AsString();
             Console.WriteLine($"Adding path: {pathString}");
             results.Add(pathString);
-            
+
             // Remove the current position from the path (backtrack)
             currPath.RemoveAt(currPath.Count - 1);
 
             return;
         }
-        
+
         // Add the current position to the path
         currPath.Add((x, y));
 
